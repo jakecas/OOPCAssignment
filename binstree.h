@@ -16,23 +16,27 @@ public:
     Node<T> *left;
     T curr;
 
-    Node(T root){
+    Node(){
         this->right = nullptr;
         this->left = nullptr;
-        this->curr = root;
+        this->curr = nullptr;
     }
 
 
     void insert(T obj){
-        if (this->curr == obj){
-            std::cout << "The new object is already in the tree." << std::endl;
+        if (this->curr == nullptr){
+            std::cout << "here" << std::endl;
+            this->curr = obj;
         } else if (*obj < *this->curr){
             std::cout << "left" << std::endl;
-            this->left = new Node<T>(obj);
+            this->left = new Node<T>();
+            this->left->insert(obj);
         } else if (*obj > *this->curr){
             std::cout << "right" << std::endl;
-            this->right = new Node<T>(obj);
-            std::cout << this->right->curr << std::endl;
+            this->right = new Node<T>();
+            this->right->insert(obj);
+        } else if (*obj == *this->curr){
+            std::cout << "The new object is already in the tree." << std::endl;
         }
     }
     void remove(){}

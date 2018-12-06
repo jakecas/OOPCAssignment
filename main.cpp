@@ -5,7 +5,8 @@
 int main() {
     int p = 5;
     int *temp = &p;
-    Node<int*> *root = new Node<int*>(temp);
+    Node<int*> *root = new Node<int*>();
+    root->insert(temp);
     int q = 6;
     temp = &q;
     root->insert(temp);
@@ -16,9 +17,6 @@ int main() {
 
 
     std::cout << *root->curr << std::endl;
-
-    std::cout << "before" << std::endl;
     std::cout << *root->right->curr << std::endl;
-    std::cout << "after" << std::endl;
     return 0;
 }
