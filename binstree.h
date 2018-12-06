@@ -16,31 +16,24 @@ public:
     Node<T> *left;
     T curr;
 
-    Node(){
+    Node(T root){
         this->right = nullptr;
         this->left = nullptr;
-        this->curr = nullptr;
+        this->curr = root;
     }
 
 
     void insert(T obj){
         if (this->curr == nullptr){
-            std::cout << "here" << std::endl;
-            this->curr = obj;
+            std::cout << "Error" << std::endl;
         } else if (obj < this->curr){
             std::cout << "left" << std::endl;
-            this->left = new Node<T>();
-            left->insert(obj);
+            this->left = new Node<T>(obj);
         } else if (obj > this->curr){
             std::cout << "right" << std::endl;
-            this->right = new Node<T>();
-            right->insert(obj);
+            this->right = new Node<T>(obj);
+            std::cout << *this->right->curr << std::endl;
         }
-        std::cout << *obj << std::endl;
-        std::cout << *this->curr << std::endl;
-
-        bool temp = obj > curr;
-        std::cout << temp << std::endl;
     }
     void remove(){}
     void find(T){}
