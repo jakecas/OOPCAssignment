@@ -24,15 +24,15 @@ public:
 
 
     void insert(T obj){
-        if (this->curr == nullptr){
-            std::cout << "Error" << std::endl;
-        } else if (obj < this->curr){
+        if (this->curr == obj){
+            std::cout << "The new object is already in the tree." << std::endl;
+        } else if (*obj < *this->curr){
             std::cout << "left" << std::endl;
             this->left = new Node<T>(obj);
-        } else if (obj > this->curr){
+        } else if (*obj > *this->curr){
             std::cout << "right" << std::endl;
             this->right = new Node<T>(obj);
-            std::cout << *this->right->curr << std::endl;
+            std::cout << this->right->curr << std::endl;
         }
     }
     void remove(){}

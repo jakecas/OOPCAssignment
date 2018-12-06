@@ -6,7 +6,7 @@ int main() {
     int p = 5;
     int *temp = &p;
     Node<int*> *root = new Node<int*>(temp);
-    int q = 4;
+    int q = 6;
     temp = &q;
     root->insert(temp);
 
