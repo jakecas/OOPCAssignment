@@ -28,8 +28,18 @@ public:
         std::cout << "Greater Than?" << std::endl;
         return this->length > that.length;
     }
+
+    friend std::ostream& operator<<(std::ostream &out, const Animal& toPrint){
+        out << toPrint.getName();
+        return out;
+    }
+
+    std::string getName() const{
+        return this->name;
+    }
+
 private:
-   std::string name;
+    std::string name;
     double length;
 };
 

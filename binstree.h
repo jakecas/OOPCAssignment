@@ -5,9 +5,9 @@
 #ifndef OOPCASSIGNMENT_BINSTREE_H
 #define OOPCASSIGNMENT_BINSTREE_H
 
+#define PREORDER -1
 #define INORDER 0
 #define POSTORDER 1
-#define PREORDER 1
 
 
 template <class T> class Node{
@@ -37,13 +37,46 @@ public:
     }
     void remove(){}
     void find(T){}
-    void print(int order){}
+    void print(int order);
 
 private:
+    void preorder();
+    void inorder();
+    void postorder();
+
     Node<T> *right;
     Node<T> *left;
     T curr;
 };
+
+
+template <class T>
+void Node<T>::print(int order) {
+    if (order == PREORDER){
+//        this->preorder();
+    } else if (order == INORDER){
+        this->inorder();
+    } else if (order == POSTORDER){
+//        this->postorder();
+    } else {
+        throw "Invalid traversal order, please use one of the predefined constants: PREORDER, INORDER, POSTORDER";
+    }
+}
+
+template <class T>
+void Node<T>::inorder() {
+    if (this->left != nullptr){
+        this->left->inorder();
+    }
+
+    if(this->curr != nullptr){
+        std::cout << this->curr << std::endl;
+    }
+
+    if (this->right != nullptr){
+        this->right->inorder();
+    }
+}
 
 
 #endif //OOPCASSIGNMENT_BINSTREE_H

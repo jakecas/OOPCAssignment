@@ -7,6 +7,7 @@
 
 template <typename T>
 class Comparable {
+public:
     virtual bool operator==(const T& that) = 0;
     virtual bool operator<(const T& that) = 0;
     virtual bool operator>(const T& that) = 0;
