@@ -12,10 +12,6 @@
 
 template <class T> class Node{
 public:
-    Node<T> *right;
-    Node<T> *left;
-    T curr;
-
     Node(){
         this->right = nullptr;
         this->left = nullptr;
@@ -42,6 +38,11 @@ public:
     void remove(){}
     void find(T){}
     void print(int order){}
+
+private:
+    Node<T> *right;
+    Node<T> *left;
+    T curr;
 };
 
 
