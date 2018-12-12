@@ -42,6 +42,11 @@ int main() {
     animes->print(INORDER);
     animes->print(PREORDER);
     animes->print(POSTORDER);
+
+    cout << *animes->find(new Bird("bird", 0, false)) << endl;
+    animes->remove(new Bird("bird", 0, false));
+    cout << *animes->find(new Bird("bird", 0, false)) << endl;
+
     delete animes;
 //    delete bird;
     return 0;

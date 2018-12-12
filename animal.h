@@ -5,6 +5,8 @@
 #ifndef OOPCASSIGNMENT_ANIMAL_H
 #define OOPCASSIGNMENT_ANIMAL_H
 
+#include <string>
+
 #include "comparable.h"
 
 class Animal: public Comparable<Animal>{
@@ -19,18 +21,15 @@ public:
     }
 
     bool operator==(const Animal& that){
-        std::cout << "Equals?" << std::endl;
-        return this->length == that.length;
+        return this->name.compare(that.name) == 0;
     }
 
     bool operator<(const Animal& that){
-        std::cout << "Less Than?" << std::endl;
-        return this->length < that.length;
+        return this->name.compare(that.name) < 0;
     }
 
     bool operator>(const Animal& that){
-        std::cout << "Greater Than?" << std::endl;
-        return this->length > that.length;
+        return this->name.compare(that.name) > 0;
     }
 
     friend std::ostream& operator<<(std::ostream &out, const Animal& toPrint){
