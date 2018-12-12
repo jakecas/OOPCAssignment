@@ -8,20 +8,18 @@ using namespace std;
 
 int main() {
 //     GOOD
-    int p = 5;
-    int *temp = &p;
-    Node<int*> *root = new Node<int*>();
-    root->insert(temp);
-    int q = 6;
-    temp = &q;
-    root->insert(temp);
-
-    int r = 3;
-    temp = &r;
-    root->insert(temp);
-
-    root->print(INORDER);
-    delete root;
+//    int *p = new int(5);
+//    Node<int*> *root = new Node<int*>();
+//    root->insert(p);
+//
+//    int *q = new int(6);
+//    root->insert(q);
+//
+//    int *r = new int(3);
+//    root->insert(r);
+//
+//    root->print(INORDER);
+//    delete root;
 
 
     //Testing Animals
@@ -45,6 +43,6 @@ int main() {
     animes->print(PREORDER);
     animes->print(POSTORDER);
     delete animes;
-
+//    delete bird;
     return 0;
 }

@@ -5,10 +5,24 @@
 #ifndef OOPCASSIGNMENT_BINSTREE_H
 #define OOPCASSIGNMENT_BINSTREE_H
 
+#include <exception>
+
 #define PREORDER -1
 #define INORDER 0
 #define POSTORDER 1
 
+
+struct DuplicateObjectException : public std::exception {
+    const char *message () const throw () {
+        return "The new object is already in the tree.";
+    }
+};
+
+struct InvalidTraversalOrderException : public std::exception {
+    const char *message () const throw() {
+        return "Invalid traversal order, please use one of the predefined constants: PREORDER, INORDER, POSTORDER";
+    }
+};
 
 template <class T> class Node{
 public:
@@ -18,15 +32,9 @@ public:
         this->curr = nullptr;
     }
     ~Node(){
-        std::cout << "Deleting left" << std::endl;
         delete this->left;
-
-        std::cout << "Deleting right" << std::endl;
         delete this->right;
-
-        std::cout << "Deleting curr " << *this->curr <<std::endl;
         delete this->curr;
-        std::cout << "Deletion done" << std::endl;
     }
 
     void insert(T obj){
@@ -46,11 +54,11 @@ public:
             this->right->insert(obj);
             std::cout << "Inserted right" << std::endl;
         } else if (*obj == *this->curr){
-            throw "The new object is already in the tree.";
+            throw new DuplicateObjectException();
         }
     }
     void remove(){
-//        if()
+
     }
     void find(T){}
     void print(int order){
@@ -61,7 +69,7 @@ public:
         } else if (order == POSTORDER){
             this->postorder();
         } else {
-            throw "Invalid traversal order, please use one of the predefined constants: PREORDER, INORDER, POSTORDER";
+            throw new InvalidTraversalOrderException;
         }
     }
 
