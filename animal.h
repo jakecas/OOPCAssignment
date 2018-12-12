@@ -13,6 +13,10 @@ public:
         this->name = name;
         this->length = length;
     }
+    // Needs to be virtual so that the derived classes' destructor is called first.
+    virtual ~Animal(){
+        std::cout << "Animal dead" << std::endl;
+    }
 
     bool operator==(const Animal& that){
         std::cout << "Equals?" << std::endl;
@@ -50,6 +54,10 @@ public:
         this->averageLitterSize = averageLitterSize;
     }
 
+    ~Mammal(){
+        std::cout << "Mammal dead" << std::endl;
+    }
+
 private:
     int averageLitterSize;
 };
@@ -61,6 +69,10 @@ public:
         this->venomous = venomous;
     }
 
+    ~Reptile(){
+        std::cout << "Reptile dead" << std::endl;
+    }
+
 private:
     bool venomous;
 };
@@ -70,6 +82,10 @@ public:
     Bird(std::string name, double length, bool canFly)
             : Animal(name, length){
         this->canFly = canFly;
+    }
+
+    ~Bird(){
+        std::cout << "Bird dead" << std::endl;
     }
 
 private:

@@ -17,32 +17,96 @@ public:
         this->left = nullptr;
         this->curr = nullptr;
     }
+    ~Node(){
+        std::cout << "Deleting left" << std::endl;
+        delete this->left;
 
+        std::cout << "Deleting right" << std::endl;
+        delete this->right;
+
+        std::cout << "Deleting curr " << *this->curr <<std::endl;
+        delete this->curr;
+        std::cout << "Deletion done" << std::endl;
+    }
 
     void insert(T obj){
         if (this->curr == nullptr){
-            std::cout << "here" << std::endl;
             this->curr = obj;
+            std::cout << "Inserted here" << std::endl;
         } else if (*obj < *this->curr){
-            std::cout << "left" << std::endl;
-            this->left = new Node<T>();
+            if(this->left == nullptr) {
+                this->left = new Node<T>();
+            }
             this->left->insert(obj);
+            std::cout << "Inserted left" << std::endl;
         } else if (*obj > *this->curr){
-            std::cout << "right" << std::endl;
-            this->right = new Node<T>();
+            if(this->right == nullptr) {
+                this->right = new Node<T>();
+            }
             this->right->insert(obj);
+            std::cout << "Inserted right" << std::endl;
         } else if (*obj == *this->curr){
-            std::cout << "The new object is already in the tree." << std::endl;
+            throw "The new object is already in the tree.";
         }
     }
-    void remove(){}
+    void remove(){
+//        if()
+    }
     void find(T){}
-    void print(int order);
+    void print(int order){
+        if (order == PREORDER){
+            this->preorder();
+        } else if (order == INORDER){
+            this->inorder();
+        } else if (order == POSTORDER){
+            this->postorder();
+        } else {
+            throw "Invalid traversal order, please use one of the predefined constants: PREORDER, INORDER, POSTORDER";
+        }
+    }
 
 private:
-    void preorder();
-    void inorder();
-    void postorder();
+    void preorder(){
+        if(this->curr != nullptr){
+            std::cout << *curr << std::endl;
+        }
+
+        if (this->left != nullptr){
+            this->left->preorder();
+        }
+
+        if (this->right != nullptr){
+            this->right->preorder();
+        }
+    }
+
+    void inorder() {
+        if (this->left != nullptr){
+            this->left->inorder();
+        }
+
+        if(this->curr != nullptr){
+            std::cout << *curr << std::endl;
+        }
+
+        if (this->right != nullptr){
+            this->right->inorder();
+        }
+    }
+
+    void postorder(){
+        if (this->left != nullptr){
+            this->left->postorder();
+        }
+
+        if (this->right != nullptr){
+            this->right->postorder();
+        }
+
+        if(this->curr != nullptr){
+            std::cout << *curr << std::endl;
+        }
+    }
 
     Node<T> *right;
     Node<T> *left;
@@ -50,33 +114,33 @@ private:
 };
 
 
-template <class T>
-void Node<T>::print(int order) {
-    if (order == PREORDER){
-//        this->preorder();
-    } else if (order == INORDER){
-        this->inorder();
-    } else if (order == POSTORDER){
-//        this->postorder();
-    } else {
-        throw "Invalid traversal order, please use one of the predefined constants: PREORDER, INORDER, POSTORDER";
-    }
-}
+//template <class T>
+//void Node<T>::print(int order) {
+//    if (order == PREORDER){
+////        this->preorder();
+//    } else if (order == INORDER){
+//        this->inorder();
+//    } else if (order == POSTORDER){
+////        this->postorder();
+//    } else {
+//        throw "Invalid traversal order, please use one of the predefined constants: PREORDER, INORDER, POSTORDER";
+//    }
+//}
 
-template <class T>
-void Node<T>::inorder() {
-    if (this->left != nullptr){
-        this->left->inorder();
-    }
-
-    if(this->curr != nullptr){
-        std::cout << this->curr << std::endl;
-    }
-
-    if (this->right != nullptr){
-        this->right->inorder();
-    }
-}
+//template <class T>
+//void Node<T>::inorder() {
+//    if (this->left != nullptr){
+//        this->left->inorder();
+//    }
+//
+//    if(this->curr != nullptr){
+//        std::cout << this->curr << std::endl;
+//    }
+//
+//    if (this->right != nullptr){
+//        this->right->inorder();
+//    }
+//}
 
 
 #endif //OOPCASSIGNMENT_BINSTREE_H
