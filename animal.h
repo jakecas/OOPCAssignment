@@ -17,7 +17,7 @@ public:
     }
     // Needs to be virtual so that the derived classes' destructor is called first.
     virtual ~Animal(){
-        std::cout << "Animal dead" << std::endl;
+//        std::cout << "Animal dead" << std::endl;
     }
 
     bool operator==(const Animal& that){

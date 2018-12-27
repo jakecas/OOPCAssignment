@@ -39,13 +39,21 @@ int main() {
     animes->insert(dog);
     animes->insert(snek);
     animes->insert(bird);
-    animes->print(INORDER);
-    animes->print(PREORDER);
-    animes->print(POSTORDER);
+//    animes->print(INORDER);
+//    animes->print(PREORDER);
+//    animes->print(POSTORDER);
 
-    cout << *animes->find(new Bird("bird", 0, false)) << endl;
-    animes->remove(new Bird("bird", 0, false));
-    cout << *animes->find(new Bird("bird", 0, false)) << endl;
+//    cout << *animes->find(new Bird("bird", 0, false)) << endl;
+//    animes->remove(new Bird("bird", 0, false));
+//    animes->print(INORDER);
+//
+//    animes->remove(new Mammal("dog", 60, 1));
+//    animes->print(INORDER);
+
+    animes->remove(new Mammal("cat", 60, 1));
+    animes->print(INORDER);
+
+//    cout << *animes->find(new Bird("bird", 0, false)) << endl;
 
     delete animes;
 //    delete bird;

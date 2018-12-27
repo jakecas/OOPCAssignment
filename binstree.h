@@ -43,48 +43,68 @@ public:
 
     void insert(T obj){
         if (this->curr == nullptr){
-            this->curr = obj;
             std::cout << "Inserted here" << std::endl;
+            this->curr = obj;
         } else if (*obj < *this->curr){
             if(this->left == nullptr) {
                 this->left = new Node<T>();
             }
-            this->left->insert(obj);
             std::cout << "Inserted left" << std::endl;
+            this->left->insert(obj);
         } else if (*obj > *this->curr){
             if(this->right == nullptr) {
                 this->right = new Node<T>();
             }
-            this->right->insert(obj);
             std::cout << "Inserted right" << std::endl;
+            this->right->insert(obj);
         } else if (*obj == *this->curr){
             throw new DuplicateObjectException();
         }
     }
+
     void remove(T obj){
         Node<T> *toDelete = findNode(obj);
 
         if(toDelete->left == nullptr && toDelete->right == nullptr) {
             // This is incorrect.
-            delete toDelete;
+            toDelete->curr = nullptr;
+        } else if (toDelete->left != nullptr && toDelete->right == nullptr){
+            Node<T> *tempLeft = toDelete->left;
+            *toDelete->curr = *tempLeft->curr;
+            toDelete->left = tempLeft->left;
+            toDelete->right = tempLeft->right;
+        } else if (toDelete->left == nullptr && toDelete->right != nullptr){
+            Node<T> *tempRight = toDelete->right;
+            *toDelete->curr = *tempRight->curr;
+            toDelete->left = tempRight->left;
+            toDelete->right = tempRight->right;
+        } else {
+            Node<T> *successor = toDelete->right->findSmallest();
+            *toDelete->curr = *successor->curr;
+            successor->curr = nullptr;
         }
     }
 
-    T find(T obj){
-        return findNode(obj)->curr;
-    }
     // Find takes an object of type T and traverses the list to find it.
     // obj does not need to be fully fleshed out,
     // the only thing it needs to contain is the attribute that is used to compare.
+    T find(T obj){
+        return findNode(obj)->curr;
+    }
+
     void print(int order){
-        if (order == PREORDER){
-            this->preorder();
-        } else if (order == INORDER){
-            this->inorder();
-        } else if (order == POSTORDER){
-            this->postorder();
-        } else {
-            throw new InvalidTraversalOrderException;
+        switch(order){
+            case PREORDER:
+                this->preorder();
+                break;
+            case INORDER:
+                this->inorder();
+                break;
+            case POSTORDER:
+                this->postorder();
+                break;
+            default:
+                throw new InvalidTraversalOrderException;
         }
     }
 
@@ -101,6 +121,16 @@ private:
         } else {
             throw new ObjectNotFoundException();
         }
+    }
+
+    Node<T>* findSmallest(){
+        if(this->left != nullptr){
+            if(this->left->curr != nullptr){
+                return this->left->findSmallest();
+            }
+        }
+
+        return this;
     }
 
     void preorder(){
