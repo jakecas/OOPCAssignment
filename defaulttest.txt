@@ -1,0 +1,17 @@
+Insert mammal Cat 0.95 4
+Insert Mammal Dog 1.05 4
+Insert reptile Snake 1.95 venomous
+Insert Reptile Newt 0.2 non-venomous
+Insert bird PeregrineFalcon 1.2 can-fly
+Insert Bird Penguin 0.8 cannot-fly
+
+Insert mammal not-enough-parameters
+Insert mammal too-many-parameters 4 5 6
+Insert reptile invalid-venomous 1 false
+Insert reptile string-as-length metre venomous
+Insert mammal invalid-litter-size 1 five
+
+NonExistentCommand
+
+
+Print

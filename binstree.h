@@ -43,23 +43,21 @@ public:
 
     void insert(T obj){
         if (this->curr == nullptr){
-            std::cout << "Inserted here" << std::endl;
             this->curr = obj;
         } else if (*obj < *this->curr){
             if(this->left == nullptr) {
                 this->left = new Node<T>();
             }
-            std::cout << "Inserted left" << std::endl;
             this->left->insert(obj);
         } else if (*obj > *this->curr){
             if(this->right == nullptr) {
                 this->right = new Node<T>();
             }
-            std::cout << "Inserted right" << std::endl;
             this->right->insert(obj);
         } else if (*obj == *this->curr){
             throw new DuplicateObjectException();
         }
+
     }
 
     void remove(T obj){

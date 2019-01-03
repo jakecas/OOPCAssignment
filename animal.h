@@ -6,18 +6,25 @@
 #define OOPCASSIGNMENT_ANIMAL_H
 
 #include <string>
+#include <sstream>
 
 #include "comparable.h"
 
+using namespace std;
+
 class Animal: public Comparable<Animal>{
 public:
-    Animal(std::string name, double length){
+    Animal(string name, double length){
         this->name = name;
         this->length = length;
     }
+
+    Animal(string name){
+        this->name = name;
+    }
+
     // Needs to be virtual so that the derived classes' destructor is called first.
     virtual ~Animal(){
-//        std::cout << "Animal dead" << std::endl;
     }
 
     bool operator==(const Animal& that){
@@ -32,29 +39,49 @@ public:
         return this->name.compare(that.name) > 0;
     }
 
-    friend std::ostream& operator<<(std::ostream &out, const Animal& toPrint){
-        out << toPrint.getName();
+    friend ostream& operator<<(ostream &out, const Animal& toPrint){
+        out << toPrint.toString() << endl;
         return out;
     }
 
-    std::string getName() const{
+    virtual string toString() const {
+        ostringstream strs;
+        strs << "Animal: " << this->getName() << " " << this->getLength();
+        return strs.str();
+    }
+
+    string getName() const{
         return this->name;
     }
 
+    double getLength() const{
+        return this->length;
+    }
+
 private:
-    std::string name;
+    string name;
     double length;
 };
 
 class Mammal: public Animal{
 public:
-    Mammal(std::string name, double length, int averageLitterSize)
+    Mammal(string name, double length, int averageLitterSize)
     : Animal(name, length){
         this->averageLitterSize = averageLitterSize;
     }
 
     ~Mammal(){
-        std::cout << "Mammal dead" << std::endl;
+        cout << "Mammal dead" << endl;
+    }
+
+    int getAverageLitterSize() const{
+        return this->averageLitterSize;
+    }
+
+    string toString() const {
+        ostringstream strs;
+        strs << "Mammal: " << this->getName() << " " << this->getLength() << " " << this->getAverageLitterSize();
+        return strs.str();
     }
 
 private:
@@ -63,13 +90,25 @@ private:
 
 class Reptile: public Animal{
 public:
-    Reptile(std::string name, double length, bool venomous)
+    Reptile(string name, double length, bool venomous)
     : Animal(name, length){
         this->venomous = venomous;
     }
 
     ~Reptile(){
-        std::cout << "Reptile dead" << std::endl;
+        cout << "Reptile dead" << endl;
+    }
+
+
+    bool getVenomous() const{
+        return this->venomous;
+    }
+
+    string toString() const {
+        string venomousString = this->getVenomous() ? "venomous" : "non-venomous";
+        ostringstream strs;
+        strs << "Reptile: " << this->getName() << " " << this->getLength() << " " << venomousString;
+        return strs.str();
     }
 
 private:
@@ -78,13 +117,25 @@ private:
 
 class Bird: public Animal{
 public:
-    Bird(std::string name, double length, bool canFly)
+    Bird(string name, double length, bool canFly)
             : Animal(name, length){
         this->canFly = canFly;
     }
 
     ~Bird(){
-        std::cout << "Bird dead" << std::endl;
+        cout << "Bird dead" << endl;
+    }
+
+
+    bool getCanFly() const{
+        return this->canFly;
+    }
+
+    string toString() const {
+        string canFlyString = this->getCanFly() ? "can-fly" : "cannot-fly";
+        ostringstream strs;
+        strs << "Bird: " << this->getName() << " " << this->getLength() << " " << canFlyString;
+        return strs.str();
     }
 
 private:
