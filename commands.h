@@ -21,15 +21,30 @@ struct FileNotFoundException : public std::exception {
 };
 
 struct MalformedCommandException : public std::exception {
-    string reason;
-
     MalformedCommandException(string reason){
         this->reason = "Malformed command: " + reason;
     }
 
-    const string message () const throw () {
+    virtual const string message () const throw () {
         return this->reason;
     }
+
+private:
+    string reason;
+};
+
+struct ArgumentNumberException : public MalformedCommandException{
+    ArgumentNumberException(string reason, int argnum)
+    : MalformedCommandException(reason){
+        this->argnum = argnum;
+    }
+
+    const string message () const throw () {
+        return MalformedCommandException::message() + to_string(argnum);
+    }
+
+private:
+    int argnum;
 };
 
 

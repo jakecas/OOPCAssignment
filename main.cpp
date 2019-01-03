@@ -6,10 +6,14 @@
 using namespace std;
 
 void lineRunner(vector<string> line, Node<Animal*> *root);
+void insertAnimal(vector<string> line, Node<Animal*> *root);
 Animal* constructAnimal(vector<string> line, Node<Animal*> *root);
+void findAnimal(vector<string> line, Node<Animal*> *root);
 bool venomousToBool(string venomous);
 bool canflyToBool(string canfly);
+void removeAnimal(vector<string> line, Node<Animal*> *root);
 void printAll(vector<string> line, Node<Animal*> *root);
+void checkArgumentNumber(int actual, int expected, string action);
 
 int main() {
     vector<string> lines = lineReader(DEFAULT_TEST_FILE);
@@ -19,6 +23,7 @@ int main() {
 
     while(lineNum < lines.size()){
         try {
+            cout << lines[lineNum] << endl;
             lineRunner(lineTokenizer(lines[lineNum++]), root);
         } catch(MalformedCommandException* e) {
             cout << e->message() << endl;
@@ -33,11 +38,11 @@ void lineRunner(vector<string> line, Node<Animal*> *root){
     }
 
     if(line[0].compare("Insert") == 0){
-        root->insert(constructAnimal(line, root));
+        insertAnimal(line, root);
     } else if(line[0].compare("Find") == 0){
-        cout << root->find(new Animal(line[1])) << endl;
+        findAnimal(line, root);
     } else if(line[0].compare("Remove") == 0){
-        root->remove(new Animal(line[1]));
+        removeAnimal(line, root);
     } else if(line[0].compare("Print") == 0){
         printAll(line, root);
     } else {
@@ -45,10 +50,17 @@ void lineRunner(vector<string> line, Node<Animal*> *root){
     }
 }
 
-Animal* constructAnimal(vector<string> line, Node<Animal*> *root){
-    if(line.size() != 5){
-        throw new MalformedCommandException("Incorrect number of arguments to construct animal: " + to_string(line.size()));
+void insertAnimal(vector<string> line, Node<Animal*> *root){
+    try {
+        root->insert(constructAnimal(line, root));
+    } catch(DuplicateObjectException* e){
+        cout << "Insertion Error: " << e->message() << endl;
+        return;
     }
+}
+
+Animal* constructAnimal(vector<string> line, Node<Animal*> *root){
+    checkArgumentNumber(line.size(), 5, "construct");
 
     Animal* animal;
     try {
@@ -73,6 +85,17 @@ Animal* constructAnimal(vector<string> line, Node<Animal*> *root){
     return animal;
 }
 
+void findAnimal(vector<string> line, Node<Animal*> *root){
+    checkArgumentNumber(line.size(), 2, "find");
+
+    Animal* found = root->find(new Animal(line[1]));
+    if(found == nullptr){
+        cout << "Animal '" << line[1] << "' not found in tree." << endl;
+    } else {
+        cout << *found << endl;
+    }
+}
+
 bool venomousToBool(string venomous){
     if(venomous.compare("venomous") == 0) {
         return true;
@@ -93,8 +116,18 @@ bool canflyToBool(string canfly){
     }
 }
 
+void removeAnimal(vector<string> line, Node<Animal*> *root){
+    checkArgumentNumber(line.size(), 2, "remove");
+
+    if(root->remove(new Animal(line[1]))){
+        cout << "Animal '" << line[1] << "' deleted." << endl;
+    } else {
+        cout << "Animal '" << line[1] << "' not found in tree." << endl;
+    }
+}
+
 void printAll(vector<string> line, Node<Animal*> *root){
-    if(line.size() >= 2) {
+    if(line.size() == 2) {
         if(line[1].compare("PREORDER") == 0){
             root->print(POSTORDER);
         } else if(line[1].compare("INORDER") == 0){
@@ -104,5 +137,11 @@ void printAll(vector<string> line, Node<Animal*> *root){
         }
     } else {
         root->print(INORDER);
+    }
+}
+
+void checkArgumentNumber(int actual, int expected, string action){
+    if(actual != expected){
+        throw new ArgumentNumberException("Incorrect number of arguments to " + action + " animal: ", actual);
     }
 }

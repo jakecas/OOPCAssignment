@@ -1,17 +1,36 @@
+Insert Reptile KingCobra 3.18 venomous
+Insert Reptile Crocodile 6 non-venomous
+Insert Reptile KomodoDragon 3.2 non-venomous
+Insert Mammal Aardvark 2.5 2
 Insert mammal Cat 0.95 4
 Insert Mammal Dog 1.05 4
-Insert reptile Snake 1.95 venomous
+Insert Mammal Elephant 6.5 1
+Insert Mammal Giraffe 4.2 1
+Insert Mammal Human 1.6 1
+Insert reptile BallPython 1.82 non-venomous
 Insert Reptile Newt 0.2 non-venomous
+Insert Reptile BeardedDragon 0.15 non-venomous
 Insert bird PeregrineFalcon 1.2 can-fly
-Insert Bird Penguin 0.8 cannot-fly
+Insert Bird GoldenEagle 1.8 can-fly
+Insert Bird Emu 1.9 cannot-fly
+Insert Bird Hummingbird 0.05 can-fly
 
 Insert mammal not-enough-parameters
 Insert mammal too-many-parameters 4 5 6
 Insert reptile invalid-venomous 1 false
 Insert reptile string-as-length metre venomous
 Insert mammal invalid-litter-size 1 five
-
-NonExistentCommand
-
+Insert mammal Cat 0.95 4
 
 Print
+
+Find Cat
+Remove Cat
+Find Cat
+
+Print
+
+Find NonExistentAnimal
+Remove NonExistentAnimal
+
+NonExistentCommand

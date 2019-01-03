@@ -22,11 +22,6 @@ struct InvalidTraversalOrderException : public std::exception {
         return "Invalid traversal order, please use one of the predefined constants: PREORDER, INORDER, POSTORDER";
     }
 };
-struct ObjectNotFoundException : public std::exception {
-    const char *message () const throw() {
-        return "Reached end of tree, object not found.";
-    }
-};
 
 template <class T> class Node{
 public:
@@ -60,26 +55,32 @@ public:
 
     }
 
-    void remove(T obj){
+    bool remove(T obj){
         Node<T> *toDelete = findNode(obj);
 
-        if(toDelete->left == nullptr && toDelete->right == nullptr) {
+        if(toDelete == nullptr) {
+            return false;
+        } else if(toDelete->left == nullptr && toDelete->right == nullptr) {
             // This is incorrect.
             toDelete->curr = nullptr;
+            return true;
         } else if (toDelete->left != nullptr && toDelete->right == nullptr){
             Node<T> *tempLeft = toDelete->left;
             *toDelete->curr = *tempLeft->curr;
             toDelete->left = tempLeft->left;
             toDelete->right = tempLeft->right;
+            return true;
         } else if (toDelete->left == nullptr && toDelete->right != nullptr){
             Node<T> *tempRight = toDelete->right;
             *toDelete->curr = *tempRight->curr;
             toDelete->left = tempRight->left;
             toDelete->right = tempRight->right;
+            return true;
         } else {
             Node<T> *successor = toDelete->right->findSmallest();
             *toDelete->curr = *successor->curr;
             successor->curr = nullptr;
+            return true;
         }
     }
 
@@ -87,7 +88,13 @@ public:
     // obj does not need to be fully fleshed out,
     // the only thing it needs to contain is the attribute that is used to compare.
     T find(T obj){
-        return findNode(obj)->curr;
+        Node<T>* temp = findNode(obj);
+
+        if(temp == nullptr){
+            return nullptr;
+        }
+
+        return temp->curr;
     }
 
     void print(int order){
@@ -108,8 +115,8 @@ public:
 
 private:
     Node<T>* findNode(T obj){
-        if(this->curr == nullptr){
-            throw new ObjectNotFoundException();
+        if(this->curr == nullptr && this->left == nullptr && this->right == nullptr){
+            return nullptr;
         } else if(*obj == *this->curr){
             return this;
         } else if(*obj < *this->curr && this->left != nullptr){
@@ -117,7 +124,7 @@ private:
         } else if(*obj > *this->curr && this->right != nullptr){
             return this->right->findNode(obj);
         } else {
-            throw new ObjectNotFoundException();
+            return nullptr;
         }
     }
 
@@ -133,7 +140,7 @@ private:
 
     void preorder(){
         if(this->curr != nullptr){
-            std::cout << *curr << std::endl;
+            std::cout << *curr;
         }
 
         if (this->left != nullptr){
@@ -151,7 +158,7 @@ private:
         }
 
         if(this->curr != nullptr){
-            std::cout << *curr << std::endl;
+            std::cout << *curr;
         }
 
         if (this->right != nullptr){
@@ -169,7 +176,7 @@ private:
         }
 
         if(this->curr != nullptr){
-            std::cout << *curr << std::endl;
+            std::cout << *curr;
         }
     }
 
@@ -177,35 +184,6 @@ private:
     Node<T> *left;
     T curr;
 };
-
-
-//template <class T>
-//void Node<T>::print(int order) {
-//    if (order == PREORDER){
-////        this->preorder();
-//    } else if (order == INORDER){
-//        this->inorder();
-//    } else if (order == POSTORDER){
-////        this->postorder();
-//    } else {
-//        throw "Invalid traversal order, please use one of the predefined constants: PREORDER, INORDER, POSTORDER";
-//    }
-//}
-
-//template <class T>
-//void Node<T>::inorder() {
-//    if (this->left != nullptr){
-//        this->left->inorder();
-//    }
-//
-//    if(this->curr != nullptr){
-//        std::cout << this->curr << std::endl;
-//    }
-//
-//    if (this->right != nullptr){
-//        this->right->inorder();
-//    }
-//}
 
 
 #endif //OOPCASSIGNMENT_BINSTREE_H
