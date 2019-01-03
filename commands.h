@@ -57,7 +57,7 @@ vector<string> lineReader(string fileName){
     {
         string line;
         while (getline(file, line)){
-            line[line.size()-1] = '\0';
+                line[line.size()-1] = '\0';
             lines.push_back(line);
         }
         file.close();

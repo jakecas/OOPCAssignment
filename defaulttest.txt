@@ -34,3 +34,9 @@ Find NonExistentAnimal
 Remove NonExistentAnimal
 
 NonExistentCommand
+
+Print INORDER
+
+Print PREORDER
+
+Print POSTORDER
