@@ -15,8 +15,9 @@ void removeAnimal(vector<string> line, Node<Animal*> *root);
 void printAll(vector<string> line, Node<Animal*> *root);
 void checkArgumentNumber(int actual, int expected, string action);
 
-int main() {
-    vector<string> lines = lineReader(DEFAULT_TEST_FILE);
+int main(int argc, char **argv) {
+    string file = (argc == 2) ? argv[1] : DEFAULT_TEST_FILE;
+    vector<string> lines = lineReader(file);
 
     unsigned int lineNum = 0;
     Node<Animal*> *root = new Node<Animal*>();
@@ -135,9 +136,13 @@ void printAll(vector<string> line, Node<Animal*> *root){
         } else if(line[1].compare("POSTORDER") == 0){
             root->print(PREORDER);
         }
-    } else {
+        return;
+    } else if (line.size() == 1){
         root->print(INORDER);
+        return;
     }
+
+    throw new ArgumentNumberException("Incorrect number of arguments to print tree: ", line.size());
 }
 
 void checkArgumentNumber(int actual, int expected, string action){
