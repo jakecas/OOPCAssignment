@@ -2,8 +2,8 @@
 // Created by Jake on 27/12/2018.
 //
 
-#ifndef OOPCASSIGNMENT_COMMANDS_H
-#define OOPCASSIGNMENT_COMMANDS_H
+#ifndef OOPCASSIGNMENT_LINEUTILS_H
+#define OOPCASSIGNMENT_LINEUTILS_H
 
 #define DEFAULT_TEST_FILE "defaulttest.txt"
 #define DEFAULT_LINES 32
@@ -19,34 +19,6 @@ struct FileNotFoundException : public std::exception {
         return "Unable to find or open file.";
     }
 };
-
-struct MalformedCommandException : public std::exception {
-    MalformedCommandException(string reason){
-        this->reason = "Malformed command: " + reason;
-    }
-
-    virtual const string message () const throw () {
-        return this->reason;
-    }
-
-private:
-    string reason;
-};
-
-struct ArgumentNumberException : public MalformedCommandException{
-    ArgumentNumberException(string reason, int argnum)
-    : MalformedCommandException(reason){
-        this->argnum = argnum;
-    }
-
-    const string message () const throw () {
-        return MalformedCommandException::message() + to_string(argnum);
-    }
-
-private:
-    int argnum;
-};
-
 
 
 vector<string> lineReader(string fileName){
@@ -80,4 +52,4 @@ vector<string> lineTokenizer(string line){
     return tokenizedLine;
 }
 
-#endif //OOPCASSIGNMENT_COMMANDS_H
+#endif //OOPCASSIGNMENT_LINEUTILS_H

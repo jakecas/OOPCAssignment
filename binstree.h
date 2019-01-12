@@ -26,8 +26,8 @@ struct InvalidTraversalOrderException : public std::exception {
 template <class T> class Node{
 public:
     Node(){
-        this->right = nullptr;
         this->left = nullptr;
+        this->right = nullptr;
         this->curr = nullptr;
     }
     ~Node(){
@@ -53,6 +53,16 @@ public:
             throw new DuplicateObjectException();
         }
 
+    }
+
+
+    // Find takes an object of type T and traverses the list to find it.
+    // obj does not need to be fully fleshed out,
+    // the only thing it needs to contain is the attribute that is used to compare.
+    T find(T obj){
+        Node<T>* temp = findNode(obj);
+
+        return (temp == nullptr) ? nullptr : temp->curr;
     }
 
     bool remove(T obj){
@@ -84,18 +94,6 @@ public:
         }
     }
 
-    // Find takes an object of type T and traverses the list to find it.
-    // obj does not need to be fully fleshed out,
-    // the only thing it needs to contain is the attribute that is used to compare.
-    T find(T obj){
-        Node<T>* temp = findNode(obj);
-
-        if(temp == nullptr){
-            return nullptr;
-        }
-
-        return temp->curr;
-    }
 
     void print(int order){
         switch(order){
@@ -140,7 +138,7 @@ private:
 
     void preorder(){
         if(this->curr != nullptr){
-            std::cout << *curr;
+            std::cout << *curr << std::endl;
         }
 
         if (this->left != nullptr){
@@ -158,7 +156,7 @@ private:
         }
 
         if(this->curr != nullptr){
-            std::cout << *curr;
+            std::cout << *curr << std::endl;
         }
 
         if (this->right != nullptr){
@@ -176,12 +174,12 @@ private:
         }
 
         if(this->curr != nullptr){
-            std::cout << *curr;
+            std::cout << *curr << std::endl;
         }
     }
 
-    Node<T> *right;
     Node<T> *left;
+    Node<T> *right;
     T curr;
 };
 

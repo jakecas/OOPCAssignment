@@ -9,18 +9,15 @@
 #include <sstream>
 
 #include "comparable.h"
+#include "printable.h"
 
 using namespace std;
 
-class Animal: public Comparable<Animal>{
+class Animal: public Comparable<Animal>, public Printable{
 public:
     Animal(string name, double length){
         this->name = name;
         this->length = length;
-    }
-
-    Animal(string name){
-        this->name = name;
     }
 
     // Needs to be virtual so that the derived classes' destructor is called first.
@@ -39,16 +36,7 @@ public:
         return this->name.compare(that.name) > 0;
     }
 
-    friend ostream& operator<<(ostream &out, const Animal& toPrint){
-        out << toPrint.toString() << endl;
-        return out;
-    }
 
-    virtual string toString() const {
-        ostringstream strs;
-        strs << "Animal: " << this->getName() << " " << this->getLength();
-        return strs.str();
-    }
 
     string getName() const{
         return this->name;
