@@ -8,8 +8,8 @@
 #include <string>
 #include <sstream>
 
-#include "comparable.h"
-#include "printable.h"
+#include "interfaces/comparable.h"
+#include "interfaces/printable.h"
 
 using namespace std;
 

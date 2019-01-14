@@ -8,8 +8,8 @@
 #include <iostream>
 #include <vector>
 
-#include "binstree.h"
-#include "animal.h"
+#include "../objects/binstree.h"
+#include "../objects/animal.h"
 
 using namespace std;
 
