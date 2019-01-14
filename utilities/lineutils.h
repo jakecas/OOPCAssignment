@@ -8,6 +8,7 @@
 #define DEFAULT_TEST_FILE "defaulttest.txt"
 #define DEFAULT_LINES 32
 
+#include <algorithm>
 #include <string.h>
 #include <iostream>
 #include <fstream>
@@ -30,8 +31,11 @@ vector<string> lineReader(string fileName){
     {
         string line;
         while (getline(file, line)){
-                line[line.size()-1] = '\0';
-            lines.push_back(line);
+            if(line.size() > 0)
+                // Removing line endings for both linux and windows systems just in case.
+                line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+                line.erase(remove(line.begin(), line.end(), '\r'), line.end());
+                lines.push_back(line);
         }
         file.close();
     } else {
