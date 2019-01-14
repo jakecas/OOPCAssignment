@@ -121,18 +121,14 @@ public:
 
 private:
     Node<T>* findNode(T obj){
-        std::cout << "WE'RE IN BOYS!" << std::endl;
         std::cout << *this->curr << std::endl;
         if(this->curr == nullptr && this->left == nullptr && this->right == nullptr){
             return nullptr;
         } else if(*obj == *this->curr){
-            std::cout << "HERE!" << std::endl;
             return this;
         } else if(*obj < *this->curr && this->left != nullptr){
-            std::cout << "LEFT!" << std::endl;
             return this->left->findNode(obj);
         } else if(*obj > *this->curr && this->right != nullptr){
-            std::cout << "RIGHT!" << std::endl;
             return this->right->findNode(obj);
         } else {
             return nullptr;
