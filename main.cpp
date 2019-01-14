@@ -1,61 +1,41 @@
 #include <iostream>
-#include "binstree.h"
-#include "animal.h"
+
+#include "objects/binstree.h"
+#include "objects/animal.h"
+#include "utilities/lineutils.h"
+#include "utilities/commandutils.h"
 
 using namespace std;
 
+void finalPrint(Node<Animal*> *root);
 
+int main(int argc, char **argv) {
+    // Set to the text file passed as a command line argument if one was specified, and the default test file if not.
+    string file = (argc == 2) ? argv[1] : DEFAULT_TEST_FILE;
+    // A vector of the lines in the file
+    vector<string> lines = lineReader(file);
 
-int main() {
-//     GOOD
-//    int *p = new int(5);
-//    Node<int*> *root = new Node<int*>();
-//    root->insert(p);
-//
-//    int *q = new int(6);
-//    root->insert(q);
-//
-//    int *r = new int(3);
-//    root->insert(r);
-//
-//    root->print(INORDER);
-//    delete root;
+    unsigned int lineNum = 0;
 
+    // The root node of the binary search tree
+    Node<Animal*> *root = new Node<Animal*>();
 
-    //Testing Animals
+    while(lineNum < lines.size()){
+        try {
+            cout << lines[lineNum] << endl;
+            lineRunner(lineTokenizer(lines[lineNum++]), root);
+        } catch(MalformedCommandException* e) {
+            cout << e->message() << endl;
+        }
+    }
 
-    Animal *cat = new Mammal("cat", 50, 2);
-    Animal *dog = new Mammal("dog", 60, 1);
-    Animal *snek = new Reptile("snek", 40, true);
-    Animal *bird = new Bird("bird", 10, true);
-//
-//    bool test = *cat==*dog;
-//    bool test2 = *snek==*dog;
-//    cout << test << endl;
-//    cout << test2 << endl;
-
-    Node<Animal*> *animes = new Node<Animal*>();
-    animes->insert(cat);
-    animes->insert(dog);
-    animes->insert(snek);
-    animes->insert(bird);
-//    animes->print(INORDER);
-//    animes->print(PREORDER);
-//    animes->print(POSTORDER);
-
-//    cout << *animes->find(new Bird("bird", 0, false)) << endl;
-//    animes->remove(new Bird("bird", 0, false));
-//    animes->print(INORDER);
-//
-//    animes->remove(new Mammal("dog", 60, 1));
-//    animes->print(INORDER);
-
-    animes->remove(new Mammal("cat", 60, 1));
-    animes->print(INORDER);
-
-//    cout << *animes->find(new Bird("bird", 0, false)) << endl;
-
-    delete animes;
-//    delete bird;
+    finalPrint(root);
+    delete root;
     return 0;
+}
+
+// Prints an INORDER traversal of the list, called at the end of the program.
+void finalPrint(Node<Animal*> *root){
+    cout << "\nFinal contents of binary search tree of animals (INORDER):" << endl;
+    printAll(lineTokenizer("PRINT INORDER"), root);
 }
