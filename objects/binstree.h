@@ -11,12 +11,13 @@
 #define INORDER 0
 #define POSTORDER 1
 
-
+// Thrown when an object that is already in the tree is inserted into the tree.
 struct DuplicateObjectException : public std::exception {
     const char *message () const throw () {
         return "The new object is already in the tree.";
     }
 };
+// Thrown when print() is called with an undefined traversal order.
 struct InvalidTraversalOrderException : public std::exception {
     const char *message () const throw() {
         return "Invalid traversal order, please use one of the predefined constants: PREORDER, INORDER, POSTORDER";
@@ -71,25 +72,29 @@ public:
         if(toDelete == nullptr) {
             return false;
         } else if(toDelete->left == nullptr && toDelete->right == nullptr) {
+            // Deleting a leaf.
             toDelete->curr = nullptr;
             return true;
         } else if (toDelete->left != nullptr && toDelete->right == nullptr){
+            // Shifting left subtree into the toDelete element.
             Node<T> *tempLeft = toDelete->left;
             toDelete->curr = tempLeft->curr;
             toDelete->left = tempLeft->left;
             toDelete->right = tempLeft->right;
             return true;
         } else if (toDelete->left == nullptr && toDelete->right != nullptr){
+            // Shifting right subtree into the toDelete element.
             Node<T> *tempRight = toDelete->right;
             toDelete->curr = tempRight->curr;
             toDelete->left = tempRight->left;
             toDelete->right = tempRight->right;
             return true;
         } else {
+            //Find inorder successor and move it instead of this.
             Node<T> *successor = toDelete->right->findSmallest();
             toDelete->curr = successor->curr;
             if(successor->right == nullptr) {
-                // Successor had no right subtrees, it can safely be deleted.
+                // Successor had no right subtree, it can safely be deleted.
                 successor->curr = nullptr;
             } else {
                 // Successor had a right subtree, which must be shifted up to take its place.
@@ -120,8 +125,8 @@ public:
     }
 
 private:
+    // Finds and returns the node containing the object being searched for. Used in find() and remove().
     Node<T>* findNode(T obj){
-        std::cout << *this->curr << std::endl;
         if(this->curr == nullptr && this->left == nullptr && this->right == nullptr){
             return nullptr;
         } else if(*obj == *this->curr){
@@ -135,6 +140,8 @@ private:
         }
     }
 
+    // Finds the left-most leaf of the tree.
+    // Used to find inorder successor when removing an object with two subtrees.
     Node<T>* findSmallest(){
         if(this->left != nullptr){
             if(this->left->curr != nullptr){

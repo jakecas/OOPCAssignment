@@ -14,13 +14,14 @@
 #include <vector>
 using namespace std;
 
+// Thrown if the file could not be opened.
 struct FileNotFoundException : public std::exception {
     const char *message () const throw () {
         return "Unable to find or open file.";
     }
 };
 
-
+// Splits the file into a vector of lines.
 vector<string> lineReader(string fileName){
     vector<string> lines;
     ifstream file(fileName);
@@ -40,6 +41,7 @@ vector<string> lineReader(string fileName){
     return lines;
 }
 
+// Splits the string into a vector of words.
 vector<string> lineTokenizer(string line){
     vector<string> tokenizedLine;
 
