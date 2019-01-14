@@ -71,25 +71,33 @@ public:
         if(toDelete == nullptr) {
             return false;
         } else if(toDelete->left == nullptr && toDelete->right == nullptr) {
-            // This is incorrect.
             toDelete->curr = nullptr;
             return true;
         } else if (toDelete->left != nullptr && toDelete->right == nullptr){
             Node<T> *tempLeft = toDelete->left;
-            *toDelete->curr = *tempLeft->curr;
+            toDelete->curr = tempLeft->curr;
             toDelete->left = tempLeft->left;
             toDelete->right = tempLeft->right;
             return true;
         } else if (toDelete->left == nullptr && toDelete->right != nullptr){
             Node<T> *tempRight = toDelete->right;
-            *toDelete->curr = *tempRight->curr;
+            toDelete->curr = tempRight->curr;
             toDelete->left = tempRight->left;
             toDelete->right = tempRight->right;
             return true;
         } else {
             Node<T> *successor = toDelete->right->findSmallest();
-            *toDelete->curr = *successor->curr;
-            successor->curr = nullptr;
+            toDelete->curr = successor->curr;
+            if(successor->right == nullptr) {
+                // Successor had no right subtrees, it can safely be deleted.
+                successor->curr = nullptr;
+            } else {
+                // Successor had a right subtree, which must be shifted up to take its place.
+                Node<T> *tempRight = successor->right;
+                successor->curr = tempRight->curr;
+                successor->left = tempRight->left;
+                successor->right = tempRight->right;
+            }
             return true;
         }
     }
@@ -113,13 +121,18 @@ public:
 
 private:
     Node<T>* findNode(T obj){
+        std::cout << "WE'RE IN BOYS!" << std::endl;
+        std::cout << *this->curr << std::endl;
         if(this->curr == nullptr && this->left == nullptr && this->right == nullptr){
             return nullptr;
         } else if(*obj == *this->curr){
+            std::cout << "HERE!" << std::endl;
             return this;
         } else if(*obj < *this->curr && this->left != nullptr){
+            std::cout << "LEFT!" << std::endl;
             return this->left->findNode(obj);
         } else if(*obj > *this->curr && this->right != nullptr){
+            std::cout << "RIGHT!" << std::endl;
             return this->right->findNode(obj);
         } else {
             return nullptr;
@@ -138,7 +151,7 @@ private:
 
     void preorder(){
         if(this->curr != nullptr){
-            std::cout << *curr << std::endl;
+            std::cout << *this->curr << std::endl;
         }
 
         if (this->left != nullptr){
@@ -156,7 +169,7 @@ private:
         }
 
         if(this->curr != nullptr){
-            std::cout << *curr << std::endl;
+            std::cout << *this->curr << std::endl;
         }
 
         if (this->right != nullptr){

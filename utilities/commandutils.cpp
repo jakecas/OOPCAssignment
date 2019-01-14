@@ -51,11 +51,11 @@ void removeAnimal(vector<string> line, Node<Animal*> *root){
 void printAll(vector<string> line, Node<Animal*> *root){
     if(line.size() == 2) {
         if(line[1].compare("PREORDER") == 0){
-            root->print(POSTORDER);
+            root->print(PREORDER);
         } else if(line[1].compare("INORDER") == 0){
             root->print(INORDER);
         } else if(line[1].compare("POSTORDER") == 0){
-            root->print(PREORDER);
+            root->print(POSTORDER);
         }
         return;
     } else if (line.size() == 1){

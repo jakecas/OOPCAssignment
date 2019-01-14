@@ -22,13 +22,19 @@ Insert reptile string-as-length metre venomous
 Insert mammal invalid-litter-size 1 five
 Insert mammal Cat 0.95 4
 
-Print
 
 Find Cat
 Remove Cat
 Find Cat
+Find Crocodile
+Remove Crocodile
+Find Crocodile
+Find KingCobra
+Remove KingCobra
+Find KingCobra
 
 Print
+
 
 Find NonExistentAnimal
 Remove NonExistentAnimal

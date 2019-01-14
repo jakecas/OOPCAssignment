@@ -13,6 +13,8 @@
 
 using namespace std;
 
+// Animal implements the Comparable interface so as to allow it to be stored in a binary search tree,
+// and also implements the Printable interface so that it can be printed easily within that same tree.
 class Animal: public Comparable<Animal>, public Printable{
 public:
     Animal(string name, double length){
@@ -59,7 +61,7 @@ public:
     }
 
     ~Mammal(){
-        cout << "Mammal dead" << endl;
+        cout << "Mammal deleted" << endl;
     }
 
     int getAverageLitterSize() const{
@@ -84,7 +86,7 @@ public:
     }
 
     ~Reptile(){
-        cout << "Reptile dead" << endl;
+        cout << "Reptile deleted" << endl;
     }
 
 
@@ -111,7 +113,7 @@ public:
     }
 
     ~Bird(){
-        cout << "Bird dead" << endl;
+        cout << "Bird deleted" << endl;
     }
 
 
